@@ -11,25 +11,29 @@ pool:
 
 steps:
 - task: NodeTool@0
+  displayName: 'Install Node.js'
   inputs:
     versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
+  
 - script: |
     npm install
     npm run build
   displayName: 'npm install and build'
 
 - task: ArchiveFiles@2
+  displayName: Create app archive
   inputs:
     rootFolderOrFile: 'build'
     includeRootFolder: false
     archiveType: 'tar'
     archiveFile: 'server-info-app-ui.tar.gz'
     replaceExistingArchive: true
-  displayName: Create app archive
+  
+- script: az etension add -n azure-devops
+  displayName: Install Azure DevOps extension
 
 - task: AzureCLI@2
+  displayName: Publish archive to Azure Artifact feed
   inputs:
     azureSubscription: 'Pay-As-You-Go(c674e677-0afa-4dbd-ba75-9ffc78bcf0f7)'
     scriptType: 'bash'
