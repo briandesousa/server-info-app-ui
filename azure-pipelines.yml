@@ -29,7 +29,7 @@ steps:
     archiveFile: 'server-info-app-ui.tar.gz'
     replaceExistingArchive: true
   
-- script: az etension add -n azure-devops
+- script: az extension add -n azure-devops
   displayName: Install Azure DevOps extension
 
 - task: AzureCLI@2
