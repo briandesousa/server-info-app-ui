@@ -30,17 +30,17 @@ steps:
     replaceExistingArchive: true
   
 
-- task: UsePythonVersion@0
-  displayName: Use Python 3
-  inputs:
-    versionSpec: '3.x'
-    architecture: 'x64'
+# - task: UsePythonVersion@0
+#   displayName: Use Python 3
+#   inputs:
+#     versionSpec: '3.x'
+#     architecture: 'x64'
 
-- script: python -m pip install --upgrade pip
-  displayName: Upgrade pip
+# - script: python -m pip install --upgrade pip
+#   displayName: Upgrade pip
 
-- script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
-  displayName: Upgrade Azure CLI
+# - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
+#   displayName: Upgrade Azure CLI
 
 - script: az --version
   displayName: Show Azure CLI version
@@ -54,11 +54,11 @@ steps:
   displayName: Login Azure DevOps
 
 - script: |
-    az artifacts universal publish
-      --organization https://briandesousa.visualstudio.com
-      --feed briandesousa
-      --name server-info-app-ui
-      --version 0.0.1
-      --description "server-info-app UI artifact"
+    az artifacts universal publish \
+      --organization https://briandesousa.visualstudio.com \
+      --feed briandesousa \
+      --name server-info-app-ui \
+      --version 0.0.1 \
+      --description "server-info-app UI artifact" \
       --path ./server-info-app-ui.tar.gz
   displayName: Publish archive to Azure Artifacts    
