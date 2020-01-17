@@ -50,6 +50,7 @@ steps:
 #   displayName: Publish archive to Azure Artifacts    
 
 - task: PublishPipelineArtifact@1
-  targetPath: 'server-info-app-ui.tar.gz'
-  artifactName: 'server-info-app-ui.tar.gz'
   displayName: Publish to pipeline
+  inputs:
+    targetPath: 'server-info-app-ui.tar.gz'
+    artifactName: 'server-info-app-ui.tar.gz'
