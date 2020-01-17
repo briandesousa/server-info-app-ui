@@ -29,34 +29,27 @@ steps:
     archiveFile: 'server-info-app-ui.tar.gz'
     replaceExistingArchive: true
 
-# - task: UsePythonVersion@0
-#   displayName: Use Python 3
-#   inputs:
-#     versionSpec: '3.x'
-#     architecture: 'x64'
+# - script: az --version
+#   displayName: Show Azure CLI version
 
-# - script: python -m pip install --upgrade pip
-#   displayName: Upgrade pip
+# - script: az extension add -n azure-devops
+#   displayName: Install Azure DevOps extension
 
-# - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
-#   displayName: Upgrade Azure CLI
+# - script: echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
+#   env:
+#     AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
+#   displayName: Login Azure DevOps
 
-- script: az --version
-  displayName: Show Azure CLI version
+# - script: |
+#     az artifacts universal publish \
+#       --organization https://briandesousa.visualstudio.com \
+#       --feed briandesousa \
+#       --name server-info-app-ui \
+#       --version 0.0.1 \
+#       --path .
+#   displayName: Publish archive to Azure Artifacts    
 
-- script: az extension add -n azure-devops
-  displayName: Install Azure DevOps extension
-
-- script: echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
-  env:
-    AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
-  displayName: Login Azure DevOps
-
-- script: |
-    az artifacts universal publish \
-      --organization https://briandesousa.visualstudio.com \
-      --feed briandesousa \
-      --name server-info-app-ui \
-      --version 0.0.1 \
-      --path .
-  displayName: Publish archive to Azure Artifacts    
+- task: PublishPipelineArtifact@1
+  targetPath: 'server-info-app-ui.tar.gz'
+  artifactName: 'server-info-app-ui.tar.gz'
+  displayName: Publish to pipeline
