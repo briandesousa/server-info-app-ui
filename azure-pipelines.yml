@@ -29,9 +29,30 @@ steps:
     archiveFile: 'server-info-app-ui.tar.gz'
     replaceExistingArchive: true
   
+
+- task: UsePythonVersion@0
+  displayName: Use Python 3
+  inputs:
+    versionSpec: '3.x'
+    architecture: 'x64'
+
+- script: python -m pip install --upgrade pip
+  displayName: Upgrade pip
+
+- script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
+  displayName: Upgrade Azure CLI
+
+- script: az --version
+  displayName: Show Azure CLI version
+
 - script: az extension add -n azure-devops
   displayName: Install Azure DevOps extension
 
+- script: echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
+  env:
+    AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
+  displayName: Login Azure DevOps
+  
 - task: AzureCLI@2
   displayName: Publish archive to Azure Artifact feed
   inputs:
@@ -40,7 +61,7 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       az artifacts universal publish
-        -- organization https://briandesousa.visualstudio.com
+        --organization https://briandesousa.visualstudio.com
         --feed briandesousa
         --name server-info-app-ui
         --version 0.0.1
