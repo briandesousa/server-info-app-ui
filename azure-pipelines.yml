@@ -52,18 +52,13 @@ steps:
   env:
     AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
   displayName: Login Azure DevOps
-  
-- task: AzureCLI@2
-  displayName: Publish archive to Azure Artifact feed
-  inputs:
-    azureSubscription: 'Pay-As-You-Go(c674e677-0afa-4dbd-ba75-9ffc78bcf0f7)'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      az artifacts universal publish
-        --organization https://briandesousa.visualstudio.com
-        --feed briandesousa
-        --name server-info-app-ui
-        --version 0.0.1
-        --description "server-info-app UI artifact"
-        --path ./server-info-app-ui.tar.gz
+
+- script: |
+    az artifacts universal publish
+      --organization https://briandesousa.visualstudio.com
+      --feed briandesousa
+      --name server-info-app-ui
+      --version 0.0.1
+      --description "server-info-app UI artifact"
+      --path ./server-info-app-ui.tar.gz
+  displayName: Publish archive to Azure Artifacts    
