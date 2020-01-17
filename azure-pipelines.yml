@@ -60,5 +60,5 @@ steps:
       --name server-info-app-ui \
       --version 0.0.1 \
       --description "server-info-app UI artifact" \
-      --path ./server-info-app-ui.tar.gz
+      --path server-info-app-ui.tar.gz
   displayName: Publish archive to Azure Artifacts    
