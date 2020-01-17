@@ -28,7 +28,6 @@ steps:
     archiveType: 'tar'
     archiveFile: 'server-info-app-ui.tar.gz'
     replaceExistingArchive: true
-  
 
 # - task: UsePythonVersion@0
 #   displayName: Use Python 3
@@ -59,6 +58,5 @@ steps:
       --feed briandesousa \
       --name server-info-app-ui \
       --version 0.0.1 \
-      --description "server-info-app UI artifact" \
-      --path server-info-app-ui.tar.gz
+      --path .
   displayName: Publish archive to Azure Artifacts    
